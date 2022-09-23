@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="stylesheet.css" />
+  <title>Actividad sospechosa</title>
+
+</head>
+
+<body>
+	<div class="video">
+	<video controls autoplay width="640" height="480">
+		<source src="Módulo 2_Suspicious Activity.mp4" type="video/mp4" />
+	</video>
+</div>
+    <div class="preguntasportema"> 
+<fieldset>
+	<legend>Cuestionario Actividad Sospechosa</legend>
+	<div id="test">
+		<div class="cuestion">1. Un ataque por ingenier&iacute;a social corresponde a:</div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="0" value="a">&nbsp;a : Fuerza bruta.&nbsp;</label>
+			<label>
+				<input type="radio" name="0" value="b">&nbsp;b : Spoofing.&nbsp;</label>
+			<label>
+				<input type="radio" name="0" value="c">&nbsp;c : Phishing.&nbsp;</label>
+		</div>
+		<div class="cuestion">2. Un ataque por malware corresponde a:</div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="1" value="a">&nbsp;a : Baiting.&nbsp;</label>
+			<label>
+				<input type="radio" name="1" value="b">&nbsp;b : Sniffing.&nbsp;</label>
+			<label>
+				<input type="radio" name="1" value="c">&nbsp;c : Virus.&nbsp;</label>
+		</div>
+		<div class="cuestion">3. Un tipo de troyano corresponde a::</div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="2" value="a">&nbsp;a : Stealer.&nbsp;</label>
+			<label>
+				<input type="radio" name="2" value="b">&nbsp;b : Spoofing.&nbsp;</label>
+			<label>
+				<input type="radio" name="2" value="c">&nbsp;c : Adware. &nbsp;</label>
+		</div>
+	</div>
+	<button id="boton">Mostrar resultado</button>
+	<div id="resultado">
+		<br>
+	</div>
+	<script>
+		const contenedor = document.getElementById("test");
+		const botonRes = document.getElementById("boton");
+		const resultadoTest = document.getElementById("resultado");
+
+		const preguntas = [
+			{
+				pregunta: "1. Un ataque por ingeniería social corresponde a:",
+				respuestas:
+				{
+					a: "Fuerza bruta.",
+					b: "Spoofing.",
+					c: "Phishing.",
+				},
+				respuestaCorrecta: "c",
+			},
+			{
+				pregunta: "2. Un ataque por malware corresponde a:",
+				respuestas:
+				{
+					a: "Baiting.",
+					b: "Sniffing.",
+					c: "Virus.",
+				},
+				respuestaCorrecta: "c",
+			},
+			{
+				pregunta: "3. Un tipo de troyano corresponde a:",
+				respuestas:
+				{
+					a: "Stealer.",
+					b: "Spoofing.",
+					c: "MAdware.",
+				},
+				respuestaCorrecta: "a",
+			},
+
+		];
+
+		function mostrarTest()
+		{
+			const preguntasYrespuestas = [];
+
+			preguntas.forEach((preguntaActual, numeroDePregunta) =>
+			{
+
+				const respuestas = [];
+
+				for (letraRespuesta in preguntaActual.respuestas)
+				{
+
+					respuestas.push(
+
+						`
+        <label>
+                  <input type="radio" name="${numeroDePregunta}" value="${letraRespuesta}" />
+                  ${letraRespuesta} : ${preguntaActual.respuestas[letraRespuesta]} <br>
+              </label>` 
+					);
+                   
+				}
+
+				preguntasYrespuestas.push(
+					`
+      <div class="cuestion">${preguntaActual.pregunta}</div>
+      
+          <div class="respuestas"> ${respuestas.join("")} </div>
+          `
+				);
+			});
+
+			contenedor.innerHTML = preguntasYrespuestas.join("");
+		}
+
+		mostrarTest();
+
+		function mostrarResultado()
+		{
+			const respuestas = contenedor.querySelectorAll(".respuestas");
+			let respuestasCorrectas = 0;
+
+			preguntas.forEach((preguntaActual, numeroDePregunta) =>
+			{
+				const todasLasRespuestas = respuestas[numeroDePregunta];
+				const checkboxRespuestas = `input[name='${numeroDePregunta}']:checked`;
+				const respuestaElegida = (
+					todasLasRespuestas.querySelector(checkboxRespuestas) ||
+					{}
+				).value;
+
+				if (respuestaElegida === preguntaActual.respuestaCorrecta)
+				{
+					respuestasCorrectas++;
+
+					respuestas[numeroDePregunta].style.color = "blue";
+				}
+				else
+				{
+					respuestas[numeroDePregunta].style.color = "red";
+				}
+			});
+
+			resultadoTest.innerHTML =
+				"Usted ha acertado " +
+				respuestasCorrectas +
+				" preguntas de un total de " +
+				preguntas.length;
+		}
+
+		botonRes.addEventListener("click", mostrarResultado);
+
+	</script>
+       </div>
+
+</fieldset>
+</body>
+</html>
